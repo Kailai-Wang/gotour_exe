@@ -8,8 +8,7 @@ func fibonacci() func() int {
   arr := make([]int, 0)
   var i int
 
-	return func() int {
-    
+  return func() int {
     switch i {
       case 0:
         arr = append(arr, 1)
@@ -24,8 +23,8 @@ func fibonacci() func() int {
 }
 
 func main() {
-	f := fibonacci()
-	for i := 0; i < 10; i++ {
-		fmt.Println(f())
-	}
+  f := fibonacci()
+  for i := 0; i < 10; i++ {
+    fmt.Println(f())
+  }
 }
