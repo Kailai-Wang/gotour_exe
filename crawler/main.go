@@ -6,6 +6,7 @@ import (
 )
 
 var mtx sync.Mutex
+var wg sync.WaitGroup
 var m = make(map[string]bool)
 
 type Fetcher interface {
@@ -30,6 +31,8 @@ func ExistsInMap(m *map[string]bool, s string) bool {
 // Crawl uses fetcher to recursively crawl
 // pages starting with url, to a maximum of depth.
 func Crawl(url string, depth int, fetcher Fetcher) {
+  wg.Add(1)
+  defer wg.Done()
   if depth <= 0 {
     return
   }
@@ -56,6 +59,7 @@ func Crawl(url string, depth int, fetcher Fetcher) {
 
 func main() {
   Crawl("https://golang.org/", 4, fetcher)
+  wg.Wait()
 }
 
 // fakeFetcher is Fetcher that returns canned results.
